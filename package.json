@@ -9,6 +9,7 @@
   "files": [
     "dist"
   ],
+  "type": "module",
   "main": "./dist/object-call-utils.umd.js",
   "module": "./dist/object-call-utils.es.js",
   "types": "./dist/types/index.d.ts",

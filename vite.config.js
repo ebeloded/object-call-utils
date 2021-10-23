@@ -1,11 +1,12 @@
 // vite.config.js
-const path = require('path')
-const { defineConfig } = require('vite')
 
-module.exports = defineConfig({
+import { defineConfig } from 'vite'
+
+export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/lib/index.ts'),
+      entry: new URL('src/lib/index.ts', import.meta.url).pathname,
+
       name: 'object-call-utils',
     },
   },
