@@ -12,13 +12,20 @@
   "main": "./dist/object-call-utils.umd.js",
   "module": "./dist/object-call-utils.es.js",
   "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/object-call-utils.es.js",
+      "require": "./dist/object-call-utils.umd.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc",
     "serve": "vite preview"
   },
   "devDependencies": {
-    "typescript": "4.4.2",
-    "vite": "2.5.1"
+    "typescript": "4.4.4",
+    "vite": "2.6.10"
   }
 }
