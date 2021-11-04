@@ -10,13 +10,13 @@
     "dist"
   ],
   "type": "module",
-  "main": "./dist/object-call-utils.umd.js",
-  "module": "./dist/object-call-utils.es.js",
+  "main": "./dist/lib.cjs",
+  "module": "./dist/lib.js",
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/object-call-utils.es.js",
-      "require": "./dist/object-call-utils.umd.js"
+      "import": "./dist/lib.js",
+      "require": "./dist/lib.cjs"
     },
     "./package.json": "./package.json"
   },
