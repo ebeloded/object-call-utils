@@ -26,3 +26,14 @@ export function proxyObjectCall<T>(
 
   return proxy([])
 }
+
+export const callEndpoint =
+  (api: Traversable<Function>) => (path: string[], args: any[], context: any) =>
+    use(traverse(api, path), (endpoint) =>
+      endpoint
+        ? asyncCall(() => endpoint.apply(context, args)).then(
+            (ok) => ({ ok }),
+            (err) => ({ error: err.toString() })
+          )
+        : Promise.resolve({ error: 'Endpoint not found' })
+    )
