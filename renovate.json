@@ -1,5 +1,5 @@
 {
-  "extends": ["config:base", "group:monorepos"],
+  "extends": ["group:monorepos"],
 
   "packageRules": [
     {
