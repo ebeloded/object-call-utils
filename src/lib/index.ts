@@ -1,5 +1,4 @@
 export const use = <A, B>(a: A, cb: (a: A) => B): B => cb(a)
-export const noop = (..._args: any[]) => {}
 export const asyncCall = async (f: Function) => f()
 
 interface Traversable<T> {
@@ -15,18 +14,6 @@ export const traverse = (
       : (next as Function)
   )
 
-export function proxyObjectCall<T>(
-  call: (path: string[], args: any[]) => any
-): T {
-  const proxy = (path: Array<string>): T =>
-    new Proxy(() => {}, {
-      get: (_target, prop: string) => proxy([...path, prop]),
-      apply: (_, _this, args) => call(path, args),
-    }) as unknown as T
-
-  return proxy([])
-}
-
 export const callEndpoint =
   (api: Traversable<Function>) => (path: string[], args: any[], context: any) =>
     use(traverse(api, path), (endpoint) =>
@@ -37,3 +24,29 @@ export const callEndpoint =
           )
         : Promise.resolve({ error: 'Endpoint not found' })
     )
+
+export function proxyObjectCall<T>(
+  cb: (path: string[], args: any[], context: any) => any
+): T {
+  const proxy = (path: string[]): T =>
+    new Proxy(() => {}, {
+      get: (_target, prop: string) => proxy([...path, prop]),
+      apply: (_, _this, args) => {
+        let context = _this
+        const lastIndex = path.length - 1
+        const last = path[lastIndex]
+
+        if (last === 'call') {
+          path = path.slice(0, lastIndex)
+          context = args.shift()
+        } else if (last === 'apply') {
+          path = path.slice(0, lastIndex)
+          context = args[0]
+          args = args[1]
+        }
+        return cb.call(context, path, args, context)
+      },
+    }) as unknown as T
+
+  return proxy([])
+}
