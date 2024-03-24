@@ -27,6 +27,6 @@
   },
   "devDependencies": {
     "typescript": "4.4.4",
-    "vite": "2.6.10"
+    "vite": "2.9.18"
   }
 }
